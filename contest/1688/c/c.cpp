@@ -18,43 +18,30 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-class Solution {
-public:
-	int _k;
-	vector<int> _d;
-	vector<vector<int> > _e;
-	vector<vector<int> > grid(2);
-	void tolo(int idx)
-	{
-		queue<int> q;
-		for (int i = 1; i <= _k; i++) if (_d[i] == 0) q.push(i);
-		while (!q.empty()) {
-			auto frt = q.front(); q.pop();
-			grid[idx].push_back(frt);
-			for (auto &v : _e[frt]) {
-				_d[v]--;
-				if (_d[v] == 0) q.push(v);
+int n;
+int tr(char c) { return c - 'a'; }
+int main()
+{
+	ACCELERATE;
+	rush() {
+		cin >> n;
+		string s, t;
+		vector<string> se;
+		vector<int> cnt(30, 0), num(30, 0);
+		rep(i, 1, 2 * n) {
+			cin >> s;
+			for (auto &c : s) cnt[tr(c)]++;
+			se.emplace_back(s);
+		}
+		cin >> t;
+		for (auto &c : t) num[tr(c)]++;
+		rep(i, 0, 25) {
+			cnt[i] -= num[i];
+			if (cnt[i] % 2) {
+				cout << char(i + 'a') << endl;
+				break;
 			}
 		}
-		if (grid[idx].size() != k) return false;
-		return true;
-	}
-    vector<vector<int>> buildMatrix(int k, vector<vector<int>>& row, vector<vector<int>>& col) {
-		_k = k;
-		vector<vector<int> > e(k + 1);
-		vector<int> d(k + 1, 0);
-		for (auto &x : row) e[x[0]].push_back(x[1]), d[x[1]]++;
-		_e = e;	_d = d;
-		if (!tolo(0)) flag = false;
-		e.clear(); d.clear();
-		for (auto &x : col) e[x[0]].push_back(x[1]), d[x[1]]++;
-		_e = e; _d = d;
-		if (!tolo(1)) flag = false;
-		if (!flag) return vector<int>();
-		for (int i = 0; i < k; i++) r[grid[0][i]].first = i;
-		for (int i = 0; i < k; i++) r[grid[1][i]].second = i;
-		vector<vector<int>> ans(k, vector<int>(k, 0));
-		for (int i = 1; i <= k; i++) ans[r[i].first][r[i].second] = i;
-		return ans;
-    }
-};
+	}	
+	return 0;
+}

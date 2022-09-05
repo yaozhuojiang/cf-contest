@@ -18,29 +18,10 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-int tr[N << 2], a[N], n;
+
 int main()
 {
 	ACCELERATE;
-	rush() {
-		cin >> n;
-		unordered_map<int, int> mp;
-		rep(i, 1, n) {
-			cin >> a[i];
-			mp[a[i]] = i;
-		}
-		int l = mp[0], r = l;
-		ll ans = 1ll;
-		rep(i, 1, n - 2) {
-			int idx = mp[i];
-			if (idx > r) r = idx;
-			else if (idx < l) l = idx;
-			else {
-				// cout << i << " " << " " << l << " " << r << " " << (r - l - 1 - ask(1, 1, n, l + 1, r - 1)) << endl;
-				ans = (ans * (r - l + 1 - i)) % P;
-			}
-		}
-		cout << ans << endl;
-	}
+	
 	return 0;
 }

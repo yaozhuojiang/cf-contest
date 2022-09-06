@@ -18,10 +18,24 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-
+int n, a[N];
+ll d[N];
 int main()
 {
 	ACCELERATE;
-	
+	rush() {
+		cin >> n;
+		ll res = 0;
+		rep(i, 1, n) {
+			cin >> a[i];
+			d[i] = a[i] - a[i - 1];
+			if (i >= 2) {
+				res += abs(d[i]);
+				if (d[i] < 0) d[1] += d[i];
+			}
+		}
+		res += abs(d[1]);
+		cout << res << endl;
+	}
 	return 0;
 }

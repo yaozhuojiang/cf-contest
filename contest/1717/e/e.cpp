@@ -18,10 +18,11 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-
+int n;
 int main()
 {
 	ACCELERATE;
+	cin >> n;
 	
 	return 0;
 }

@@ -13,48 +13,52 @@ using namespace std;
 #define rep(i,a,b) for(int i=(a);i<=(b);i++)
 #define per(i,a,b) for(int i=(a);i>=(b);i--)
 #define ACCELERATE (ios::sync_with_stdio(false),cin.tie(0))
-const int N = 2e5 + 5;
-const int M = (N << 2);
-const int P = 1e9 + 7;
+const int N = 1e5 + 5;
+const int M = 200 + 5;
+const int P = 998244353;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-class Solution {
-public:
-	int _k;
-	vector<int> _d;
-	vector<vector<int> > _e;
-	vector<vector<int> > grid(2);
-	void tolo(int idx)
-	{
-		queue<int> q;
-		for (int i = 1; i <= _k; i++) if (_d[i] == 0) q.push(i);
-		while (!q.empty()) {
-			auto frt = q.front(); q.pop();
-			grid[idx].push_back(frt);
-			for (auto &v : _e[frt]) {
-				_d[v]--;
-				if (_d[v] == 0) q.push(v);
-			}
-		}
-		if (grid[idx].size() != k) return false;
-		return true;
+ll dp[2][N];
+int n, m, k, u, v;
+int main()
+{
+	ACCELERATE;
+	cin >> n >> m >> k;
+	map<int, vector<int> > pre;
+	vector<int> numbers;
+	numbers.push_back(1);
+	rep(i, 1, k) {
+		cin >> u >> v;
+		if (u == v) continue;
+		pre[v].push_back(u);
+		numbers.push_back(u);
+		numbers.push_back(v);
 	}
-    vector<vector<int>> buildMatrix(int k, vector<vector<int>>& row, vector<vector<int>>& col) {
-		_k = k;
-		vector<vector<int> > e(k + 1);
-		vector<int> d(k + 1, 0);
-		for (auto &x : row) e[x[0]].push_back(x[1]), d[x[1]]++;
-		_e = e;	_d = d;
-		if (!tolo(0)) flag = false;
-		e.clear(); d.clear();
-		for (auto &x : col) e[x[0]].push_back(x[1]), d[x[1]]++;
-		_e = e; _d = d;
-		if (!tolo(1)) flag = false;
-		if (!flag) return vector<int>();
-		for (int i = 0; i < k; i++) r[grid[0][i]].first = i;
-		for (int i = 0; i < k; i++) r[grid[1][i]].second = i;
-		vector<vector<int>> ans(k, vector<int>(k, 0));
-		for (int i = 1; i <= k; i++) ans[r[i].first][r[i].second] = i;
-		return ans;
-    }
-};
+	sort(numbers.begin(), numbers.end());
+	numbers.erase(unique(numbers.begin(), numbers.end()), numbers.end());
+	int r = n - numbers.size();
+	n = numbers.size() + 1;
+	dp[0][0] = 1;
+	ll now = 1, ppp = 0, tmp = 0;
+	rep(i, 1, m) {
+		ppp = now; now = 0;
+		int id = i & 1;
+		rep(j, 0, n - 2) {
+			tmp = ppp;
+			int u = numbers[j];
+			tmp = (tmp - dp[id ^ 1][j] + P) % P;
+			for (auto &x : pre[u]) {
+				int pos = lower_bound(numbers.begin(), numbers.end(), x) - numbers.begin();
+				tmp = (tmp - dp[id ^ 1][pos] + P) % P;
+			}
+			dp[id][j] = tmp;
+			now = (now + tmp) % P;
+		}
+		tmp = ppp;
+		tmp = (tmp - dp[id ^ 1][n - 1] + P) % P;
+		dp[id][n - 1] = tmp;
+		now = (now + tmp * r % P) % P;
+	}
+	cout << dp[m & 1][0] << endl;
+	return 0;
+}

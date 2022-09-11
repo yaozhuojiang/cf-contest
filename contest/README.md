@@ -1,0 +1,3 @@
+# codeforce solution
+
+(^>^)

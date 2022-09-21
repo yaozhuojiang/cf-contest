@@ -1,0 +1,55 @@
+统计项：
+用户登录审计统计项名字有出入
+Windows相关统计项无丢失
+
+Windows审计:
+Windows 硬件变更审计报表 ok
+Windows 外设访问审计报表 ok
+Windows 注册表审核审计报表   ok
+Windows 用户权限审计报表 ok
+Windows 行为审计报表 ok
+windows 账户变更审计报表 ok
+Windows 环境感知报表 ok
+Windows 文件目录审核报表 ok
+Windows 用户登录审计报表 ok
+Windows 防火墙审计   ok
+Windows 启动事件 ok
+Windows 账户管理 ok
+Windows 密码变更审计报表 ok
+Windows 事件 ok
+Windows 软件变更审计报表 ok
+Windows 网络连接审计报表 ok
+Windows 登录注销 ok
+威胁检测 ok
+Windows 进程创建审计报表 ok
+Windows 远程登录报表 ok
+
+绿盟终端审计：
+绿盟终端环境感知报表 ok
+绿盟终端硬件变更审计报表 ok
+绿盟终端软件变更审计报表 ok
+绿盟终端外设访问审计报表 ok
+绿盟终端用户权限审计 ok
+绿盟终端文件目录审计报表 ok
+绿盟终端网络连接审计报表 ok
+绿盟终端账户变更审计报表 ok
+绿盟终端密码变更审计报表 ok
+绿盟终端注册表审核审计报表 ok
+绿盟终端进程创建审计表报 ok
+绿盟终端行为审计报表 丢失登录趋势_成功 登录趋势_失败 网络登录趋势_成功  网络登录趋势_失败，多了个登录趋势
+绿盟终端用户登录审计报表 丢失 登录趋势_成功 登录趋势_失败 本地登录趋势_成功 本地登录趋势_失败 网络登录趋势_成功 网络登录趋势_失败  多了 登录趋势 注销趋势
+
+SOX合规:
+SOX-文件变更 ok
+SOX-网络设备登录报表 ok
+SOX-网络设备连接报表 ok
+SOX-计算机账户更改 ok
+SOX-网络设备外设访问报表 ok
+SOX-网络设备配置报表 ok
+SOX-终端服务会话 ok
+SOX-Windows系统事件 ok
+SOX-系统访问监控 ok
+SOX-用户组变更 ok
+SOX-策略变更 ok
+SOX-进程跟踪 ok
+SOX-用户账户更改 ok

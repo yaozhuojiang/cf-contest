@@ -21,10 +21,7 @@ const ll INF = 0x3f3f3f3f3f3f3f3f;
 
 int main()
 {
-    ACCELERATE;
-    int a;
-    for (int i = 1; i <= 5; i++) {
-        cout << i << endl;
-    }
-    return 0;
+	ACCELERATE;
+	
+	return 0;
 }

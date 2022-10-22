@@ -19,26 +19,15 @@ const int M = (N << 2);
 const int P = 998244353;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-int m;
-int n, primes[N], cnt, st[N];
-void get_primes()
-{
-    for (int i = 2; i <= n; i++) {
-        if (!st[i]) primes[cnt ++ ] = i;
-        for (int j = 0; primes[j] <= n / i; j++) {
-            st[primes[j] * i] = 1;
-            if (i % primes[j] == 0) break;
-        }
-    }
-}
+int n, m;
 int32_t main()
 {
 	ACCELERATE;
 	cin >> n >> m;
-	get_primes();
 	int lcm = 1, ans = 0, acc = 1, abb = 1;
 	rep(i, 1, n) {
-		if (!st[i]) lcm = lcm * i;
+		// if (!st[i]) lcm = lcm * i;
+		if (__gcd(i, lcm) == 1) lcm = lcm * i;
 		int cnt = m / lcm;
 		abb = (abb * (cnt % P)) % P;
 		acc = (acc * (m % P)) % P;

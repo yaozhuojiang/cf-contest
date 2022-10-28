@@ -18,12 +18,10 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-int n, m;
+
 int main()
 {
-    ACCELERATE;
-    while (cin >> n >> m) {
-        if (!n && !m) break;
-        
-    return 0;
+	ACCELERATE;
+	
+	return 0;
 }

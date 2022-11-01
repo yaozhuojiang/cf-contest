@@ -1,59 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 1e2 + 5;
+#define fi first
+#define se second
+#define db double
+#define ll long long
+#define pb push_back
+#define lchild (k<<1)
+#define rchild (k<<1|1)
+#define pii pair<int,int>
+#define mm(a,b) memset(a,b,sizeof(a))
+#define rush() int T; cin >> T; while (T--)
+#define rep(i,a,b) for(int i=(a);i<=(b);i++)
+#define per(i,a,b) for(int i=(a);i>=(b);i--)
+#define ACCELERATE (ios::sync_with_stdio(false),cin.tie(0))
+const int N = 2e5 + 5;
+const int M = (N << 2);
+const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
-int n;
-char mp[N][N];
-int dist[N][N];
-int ndir[][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+const ll INF = 1e10;
 int main()
 {
-    cin >> n;
-    memset(dist, inf, sizeof(dist));
-    queue<pair<int, int> > q;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            cin >> mp[i][j];
-            if (mp[i][j] == 'C') {
-                q.push({i, j});
-                dist[i][j] = 0;
-            }
-        }
-    }
-    while (!q.empty()) {
-        auto frt = q.front(); q.pop();
-        int x = frt.first, y = frt.second;
-        for (int i = 0; i < 4; i++) {
-            int nx = x + ndir[i][0], ny = y + ndir[i][1];
-            if (nx >= 1 && nx <= n && ny >= 1 && ny <= n && mp[nx][ny] == 'A') {
-                if (dist[nx][ny] == inf) {
-                    dist[nx][ny] = dist[x][y] + 1;
-                    q.push({nx, ny});
-                }
-            }
-        }
-    }
-    long long ans = 0;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (mp[i][j] == 'A') {
-                ans += (dist[i][j] == inf ? 0 : dist[i][j]);
-            }
-        }
-    }
+    ACCELERATE;
+    db ans = 0;
+    for (ll i = 2, j = 5; i * j <= INF; i++, j++) ans += 1.0 / (i * j);
     cout << ans << endl;
     return 0;
 }
-/*
-3
-A B C
-A A A
-A A C
-
-4
-A B C C
-B A B C
-B B A C
-A C B C
-
-*/

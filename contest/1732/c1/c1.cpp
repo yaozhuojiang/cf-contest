@@ -3,6 +3,7 @@ using namespace std;
 #define fi first
 #define se second
 #define db double
+#define int long long
 #define ll long long
 #define pb push_back
 #define lchild (k<<1)
@@ -18,10 +19,71 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-
-int main()
+int n, q, a[N], b[N], idx[N], L[N], R[N], cnt[N], tmp[N];
+ll suf[N], xxx[N];
+int32_t main()
 {
 	ACCELERATE;
-	
+	rush() {
+		int tot = 0;
+		b[0] = -1;
+		cin >> n >> q;
+		rep(i, 1, n) {
+			cin >> b[i];
+			if (b[i]) {
+				a[++tot] = b[i];
+				idx[tot] = i;
+			} else {
+				if (b[i - 1] != 0) {
+					a[++tot] = b[i];
+					idx[tot] = i;
+				}
+			}
+		}
+		per(i, 30, 0) tmp[i] = 0, cnt[i] = 0;
+		rep(i, 1, tot) {
+			suf[i] = a[i] + suf[i - 1];
+			xxx[i] = a[i] ^ xxx[i - 1];
+		}
+		rep(i, 1, tot) {
+			per(j, 30, 0) {
+				if ((a[i] >> j) & 1) cnt[j]++;
+			}
+		}
+		// per(i, 30, 0) cout << cnt[i] << " ";
+		// cout << endl;
+		rep(i, 1, q) {
+			cin >> L[i] >> R[i];
+			ll ans = 0;
+			int left = 1, right = 1;
+			rep(j, 1, tot) {
+				if (j - 1 >= 1) {
+					per(k, 30, 0) if ((a[j -  1] >> k) & 1) cnt[k]--;
+				}
+				per(k, 30, 0) tmp[k] = cnt[k];
+				bool flag = false;
+				per(k, tot, j + 1) {
+					per(l, 30, 0) {
+						if ((a[k] >> l) & 1) {
+							if (tmp[l] % 2 == 0) {
+								ll woc = suf[k] - suf[j - 1] - (xxx[k] ^ xxx[j - 1]);
+								if (woc > ans) {
+									ans = woc;
+									left = idx[j], right = idx[k];
+								} else if (woc == ans && idx[k] - idx[j] < right - left) {
+									left = idx[j], right = idx[k];
+								}
+								flag = true;
+								break;
+							}
+							tmp[l] -= 1;
+						}
+					}
+					if (flag) break;
+				}
+			}
+			cout << left << " " << right << endl;
+		}
+	}
 	return 0;
 }

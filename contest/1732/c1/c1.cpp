@@ -19,7 +19,7 @@ const int M = (N << 2);
 const int P = 1e9 + 7;
 const int inf = 0x3f3f3f3f;
 const ll INF = 0x3f3f3f3f3f3f3f3f;
-int n, q, a[N], b[N], idx[N], L[N], R[N], cnt[N], tmp[N];
+int n, q, a[N], b[N], idx[N], L[N], R[N], cnt[N][35], tmp[N];
 ll suf[N], xxx[N];
 int32_t main()
 {
@@ -40,46 +40,37 @@ int32_t main()
 				}
 			}
 		}
-		per(i, 30, 0) tmp[i] = 0, cnt[i] = 0;
+		a[++tot] = 0;
+		idx[tot] = n + 1;
 		rep(i, 1, tot) {
 			suf[i] = a[i] + suf[i - 1];
 			xxx[i] = a[i] ^ xxx[i - 1];
-		}
-		rep(i, 1, tot) {
-			per(j, 30, 0) {
-				if ((a[i] >> j) & 1) cnt[j]++;
-			}
 		}
 		// per(i, 30, 0) cout << cnt[i] << " ";
 		// cout << endl;
 		rep(i, 1, q) {
 			cin >> L[i] >> R[i];
 			ll ans = 0;
-			int left = 1, right = 1;
-			rep(j, 1, tot) {
-				if (j - 1 >= 1) {
-					per(k, 30, 0) if ((a[j -  1] >> k) & 1) cnt[k]--;
-				}
-				per(k, 30, 0) tmp[k] = cnt[k];
+			int left = L[i], right = L[i];
+			int pos1 = lower_bound(idx + 1, idx + tot + 1, L[i]) - idx;
+			int pos2 = lower_bound(idx + 1, idx + tot + 1, R[i]) - idx;
+			if (idx[pos2] > R[i]) pos2--;
+			for (int j = pos1; j <= min(pos1 + 30ll, pos2); j++) {
+				per(k, 30, 0) tmp[k] = cnt[pos2][k] - cnt[j - 1][k];
 				bool flag = false;
-				per(k, tot, j + 1) {
-					per(l, 30, 0) {
-						if ((a[k] >> l) & 1) {
-							if (tmp[l] % 2 == 0) {
-								ll woc = suf[k] - suf[j - 1] - (xxx[k] ^ xxx[j - 1]);
-								if (woc > ans) {
-									ans = woc;
-									left = idx[j], right = idx[k];
-								} else if (woc == ans && idx[k] - idx[j] < right - left) {
-									left = idx[j], right = idx[k];
-								}
-								flag = true;
-								break;
-							}
-							tmp[l] -= 1;
+				per(k, pos2, j + 1) {
+					int pre = xxx[k - 1] ^ xxx[j - 1];
+					if ((pre ^ a[k]) - pre < a[k]) {
+						ll woc = suf[k] - suf[j - 1] - (xxx[k] ^ xxx[j - 1]);
+						if (woc > ans) {
+							ans = woc;
+							left = idx[j], right = idx[k];
+						} else if (woc == ans && idx[k] - idx[j] < right - left) {
+							left = idx[j], right = idx[k];
 						}
+						flag = true;
+						break;
 					}
-					if (flag) break;
 				}
 			}
 			cout << left << " " << right << endl;
